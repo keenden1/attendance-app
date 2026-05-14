@@ -18,7 +18,6 @@ const String kDefaultSupabaseBucket = 'biometrics';
 const String kDefaultApkLink = 'https://mxckrnlamidqqpmdcaks.supabase.co/storage/v1/object/public/biometrics/attendance.apk';
 const String kDefaultWebLink = 'https://attendance-app-omega-green.vercel.app/';
 
-
 class SupabaseService {
   final String url;
   final String key;
