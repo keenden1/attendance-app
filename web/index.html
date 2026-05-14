@@ -23,24 +23,79 @@
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="my_app">
+  <meta name="apple-mobile-web-app-title" content="Attendance Pro">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>my_app</title>
+  <title>Attendance Pro</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      background-color: #F8F9FA;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #e0e0e0;
+      border-top: 5px solid #1A237E;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loading-text {
+      color: #1A237E;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <div id="loading-indicator" class="loading-container">
+    <div class="spinner"></div>
+    <div class="loading-text">Attendance Pro is starting...</div>
+  </div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Create a observer to detect when the flutter-view is added to the DOM
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+            for (let i = 0; i < mutation.addedNodes.length; i++) {
+              const node = mutation.addedNodes[i];
+              if (node.tagName === 'FLUTTER-VIEW') {
+                const loader = document.getElementById('loading-indicator');
+                if (loader) {
+                  loader.style.display = 'none';
+                }
+                observer.disconnect();
+              }
+            }
+          }
+        });
+      });
+      observer.observe(document.body, { childList: true });
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

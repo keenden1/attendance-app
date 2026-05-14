@@ -80,14 +80,14 @@ class _BiometricRawScreenState extends State<BiometricRawScreen>
       String? jsonFetchTime = data['fetch_time']?.toString();
       if (jsonFetchTime != null) {
         try {
-          // Converts "2026-05-06 16:09:30" to "04:09 PM"
+          // Converts "2026-05-06 16:09:30" to "May 6, 04:09 PM"
           final dt = DateTime.parse(jsonFetchTime);
-          _lastSyncTime = DateFormat('hh:mm a').format(dt);
+          _lastSyncTime = DateFormat('MMM d, hh:mm a').format(dt);
         } catch (_) {
           _lastSyncTime = jsonFetchTime; // fallback to raw string
         }
       } else {
-        _lastSyncTime = DateFormat('hh:mm a').format(DateTime.now());
+        _lastSyncTime = DateFormat('MMM d, hh:mm a').format(DateTime.now());
       }
 
       // Filter by biometricId if provided (only show logs for the logged-in user)
@@ -243,10 +243,23 @@ class _BiometricRawScreenState extends State<BiometricRawScreen>
   List<Map<String, dynamic>> get _filteredAttendance {
     if (_searchQuery.isEmpty) return _attendance;
     return _attendance.where((e) {
-      return e.values.any((v) => v.toString().toLowerCase().contains(_searchQuery));
+      // Check all raw values
+      final matchesRaw = e.values.any((v) => v.toString().toLowerCase().contains(_searchQuery));
+      if (matchesRaw) return true;
+
+      // Also check the formatted date string (e.g., "May 1, 2026")
+      final timestamp = e['timestamp']?.toString();
+      if (timestamp != null) {
+        try {
+          final dt = DateTime.parse(timestamp);
+          final formattedDate = DateFormat('MMMM d, yyyy').format(dt).toLowerCase();
+          if (formattedDate.contains(_searchQuery)) return true;
+        } catch (_) {}
+      }
+
+      return false;
     }).toList();
   }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
