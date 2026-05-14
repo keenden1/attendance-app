@@ -12,11 +12,11 @@ const String kApkDownloadLinkKey = 'apk_download_link';
 const String kWebAppLinkKey = 'web_app_link';
 
 // --- DEFAULT CREDENTIALS (FROM SECRETS) ---
-const String kDefaultSupabaseUrl = Secrets.supabaseUrl;
+const String kDefaultSupabaseUrl = 'https://mxckrnlamidqqpmdcaks.supabase.co';
 const String kDefaultSupabaseKey = Secrets.supabaseKey;
 const String kDefaultSupabaseBucket = 'biometrics';
-const String kDefaultApkLink = 'https://www.facebook.com/';
-const String kDefaultWebLink = 'https://mxckrnlamidqqpmdcaks.supabase.co'; // Placeholder
+const String kDefaultApkLink = 'https://mxckrnlamidqqpmdcaks.supabase.co/storage/v1/object/public/biometrics/attendance.apk';
+const String kDefaultWebLink = 'https://attendance-app-omega-green.vercel.app/';
 
 class SupabaseService {
   final String url;
