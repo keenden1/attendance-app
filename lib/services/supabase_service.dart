@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/secrets.dart';
 
 // Storage Keys
 const String kSupabaseUrlKey = 'supabase_url';
@@ -10,9 +11,9 @@ const String kLoggedInUserIdKey = 'logged_in_user_id';
 const String kApkDownloadLinkKey = 'apk_download_link';
 const String kWebAppLinkKey = 'web_app_link';
 
-// --- EMBED YOUR CREDENTIALS HERE ---
-const String kDefaultSupabaseUrl = 'https://mxckrnlamidqqpmdcaks.supabase.co';
-const String kDefaultSupabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14Y2tybmxhbWlkcXFwbWRjYWtzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxODgzMTMsImV4cCI6MjA4ODc2NDMxM30.nRUhW4Hdqhq-WTqBj3KiCAP8Y0WQFl7KdOfxMN7XnAo';
+// --- DEFAULT CREDENTIALS (FROM SECRETS) ---
+const String kDefaultSupabaseUrl = Secrets.supabaseUrl;
+const String kDefaultSupabaseKey = Secrets.supabaseKey;
 const String kDefaultSupabaseBucket = 'biometrics';
 const String kDefaultApkLink = 'https://www.facebook.com/';
 const String kDefaultWebLink = 'https://mxckrnlamidqqpmdcaks.supabase.co'; // Placeholder
